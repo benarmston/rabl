@@ -44,7 +44,9 @@ module Rabl
       builder = Rabl::Builder.new(options)
       options[:root_name] = determine_object_root(@_data, options[:root])
 
-      if is_object?(data) || !data # object @user
+      # The collection determination mechanism is not ideal. Provide a
+      # mechanism to override this.
+      if options[:not_a_collection] || is_object?(data) || !data # object @user
         builder.build(data, options)
       elsif is_collection?(data) # collection @users
         data.map { |object| builder.build(object, options) }
